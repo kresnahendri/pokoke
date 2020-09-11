@@ -3,7 +3,6 @@ import {ActivityIndicator, ListRenderItemInfo, View} from "react-native";
 import {FlatList, TouchableOpacity} from "react-native-gesture-handler";
 
 import Container from "../components/Container";
-import Spacer from "../components/Spacer";
 import PokeCardContainer from "../containers/PokeCardContainer";
 import {Pokemon} from "../hooks/http/poke/pokeModels";
 import {useGetPokeList} from "../hooks/http/poke/useGetPokeList";
@@ -46,13 +45,22 @@ const PokeListScreen: React.FC<Props> = ({navigation}) => {
           data={pokeList.data.flatMap((x) => x.results)}
           renderItem={renderItem}
           keyExtractor={(item) => item.name + item.url}
+          onEndReachedThreshold={0.5}
+          onEndReached={() => pokeList.fetchMore()}
+          ListFooterComponent={() =>
+            shouldRenderLoader ? (
+              <ActivityIndicator style={{paddingVertical: 16}} />
+            ) : (
+              <View />
+            )
+          }
+          refreshing={pokeList.isLoading}
+          onRefresh={() => {
+            if (pokeList.refetch) {
+              pokeList.refetch();
+            }
+          }}
         />
-      )}
-      {shouldRenderLoader && (
-        <>
-          <Spacer height={16} />
-          <ActivityIndicator />
-        </>
       )}
     </Container>
   );

@@ -1,4 +1,4 @@
-import {useQuery} from "react-query";
+import {queryCache, useQuery} from "react-query";
 
 import config from "../../../config";
 import {fetcher} from "../../../lib/fetcher";
@@ -24,7 +24,11 @@ export const useGetPokeDetail = ({name}: Args) => {
         url: `${config.POKE_API_URL}/pokemon/${name}`,
         method: "get",
       }),
-    {refetchOnWindowFocus: false},
+    {
+      refetchOnWindowFocus: false,
+      initialData: () =>
+        queryCache.getQueryData(`Poke_useGetPokeDetail_${name}`),
+    },
   );
 
   return result;
