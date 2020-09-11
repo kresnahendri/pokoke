@@ -11,7 +11,7 @@ interface Args {
 interface GetPokeDetailResponse {
   name: string;
   order: number;
-  sprites: PokeSprite[];
+  sprites: PokeSprite;
   types: PokeType[];
   moves: PokeMove[];
 }

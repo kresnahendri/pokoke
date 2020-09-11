@@ -19,11 +19,7 @@ const PokeDetailScreen: React.FC<Props> = ({route}) => {
   // TODO: use as component's data provider
   console.log(data);
 
-  return (
-    <Container>
-      <Text>PokeDetail</Text>
-    </Container>
-  );
+  return <Container>{data && <Text>{data.name}</Text>}</Container>;
 };
 
 export default PokeDetailScreen;

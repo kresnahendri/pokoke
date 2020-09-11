@@ -4,7 +4,7 @@ import {FlatList, TouchableOpacity} from "react-native-gesture-handler";
 
 import Container from "../components/Container";
 import Spacer from "../components/Spacer";
-import Text from "../components/Text";
+import PokeCardContainer from "../containers/PokeCardContainer";
 import {Pokemon} from "../hooks/http/poke/pokeModels";
 import {useGetPokeList} from "../hooks/http/poke/useGetPokeList";
 import {useGetPokeTypeList} from "../hooks/http/poke/useGetPokeTypeList";
@@ -34,8 +34,7 @@ const PokeListScreen: React.FC<Props> = ({navigation}) => {
         onPress={() => {
           navigation.navigate("PokeDetail", {name: pokemon.name});
         }}>
-        {/* TODO: Change with card or other beautiful component */}
-        <Text value={pokemon.name} />
+        <PokeCardContainer name={pokemon.name} />
       </TouchableOpacity>
     </View>
   );

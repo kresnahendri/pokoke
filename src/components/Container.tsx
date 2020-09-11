@@ -6,7 +6,6 @@ import Colors from "../constants/Colors";
 const styles = StyleSheet.create({
   root: {
     backgroundColor: Colors.lighter,
-    paddingTop: 12,
     flex: 1,
   },
   rootW: {
