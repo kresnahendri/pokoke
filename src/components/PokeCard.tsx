@@ -66,7 +66,12 @@ const PokeCard: React.FC<Props> = React.memo(({name, image, order, types}) => {
       </View>
       <Text value={`#${order || ""}`} />
       <Spacer height={8} />
-      <Text variant="title" color="black" value={name} />
+      <Text
+        variant="title"
+        color="black"
+        value={name}
+        style={{textTransform: "capitalize"}}
+      />
       <Spacer height={8} />
       <View style={styles.typeContainer}>
         {types &&

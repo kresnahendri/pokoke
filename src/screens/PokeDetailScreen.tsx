@@ -1,6 +1,12 @@
 /* eslint-disable react/no-array-index-key */
 import React from "react";
-import {ActivityIndicator, Image, ScrollView, View} from "react-native";
+import {
+  ActivityIndicator,
+  Image,
+  ScrollView,
+  StyleSheet,
+  View,
+} from "react-native";
 import {SvgUri} from "react-native-svg";
 
 import Container from "../components/Container";
@@ -11,6 +17,23 @@ import {
   PokeDetailNavigation,
   PokeDetailRoute,
 } from "../navigations/NavigationProps";
+
+const styles = StyleSheet.create({
+  root: {
+    paddingHorizontal: 16,
+  },
+  images: {
+    flex: 1,
+    alignItems: "center",
+  },
+  thumbnails: {
+    flexDirection: "row",
+  },
+  description: {
+    flexDirection: "row",
+    flexWrap: "wrap",
+  },
+});
 
 interface Props {
   route: PokeDetailRoute;
@@ -34,13 +57,18 @@ const PokeDetailScreen: React.FC<Props> = ({route}) => {
   const image = other.dream_world.front_default || "";
 
   return (
-    <ScrollView style={{paddingHorizontal: 16, flex: 1}}>
+    <ScrollView style={styles.root}>
       <Container>
-        <View style={{flex: 1, alignItems: "center"}}>
-          <Text variant="title" value={data.name} />
+        <View style={styles.images}>
+          <Text
+            variant="title"
+            value={data.name}
+            style={{textTransform: "capitalize"}}
+          />
+          <Spacer height={12} />
           <SvgUri width={175} height={175} uri={image} />
           <Spacer height={16} />
-          <View style={{flexDirection: "row"}}>
+          <View style={styles.thumbnails}>
             {[back_default, back_shiny, front_default, front_shiny].map(
               (thumbnail, i) => (
                 <Image
@@ -56,7 +84,7 @@ const PokeDetailScreen: React.FC<Props> = ({route}) => {
         <View>
           <Text weight="bold" value="Moves" />
           <Spacer height={8} />
-          <View style={{flexDirection: "row", flexWrap: "wrap"}}>
+          <View style={styles.description}>
             {data.moves.map(({move}) => (
               <Text
                 value={move.name}
