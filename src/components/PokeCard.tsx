@@ -1,5 +1,6 @@
 import React from "react";
-import {Image, StyleSheet, View} from "react-native";
+import {ActivityIndicator, StyleSheet, View} from "react-native";
+import {SvgUri} from "react-native-svg";
 
 import Colors from "../constants/Colors";
 import {PokeType} from "../hooks/http/poke/pokeModels";
@@ -23,7 +24,8 @@ const styles = StyleSheet.create({
     shadowRadius: 3.84,
     elevation: 5,
     backgroundColor: Colors.white,
-    margin: 8,
+    marginHorizontal: 8,
+    marginVertical: 4,
   },
   imageContainer: {
     height: 150,
@@ -56,13 +58,12 @@ const PokeCard: React.FC<Props> = React.memo(({name, image, order, types}) => {
   return (
     <View style={styles.root}>
       <View style={styles.imageContainer}>
-        <Image
-          source={{uri: image}}
-          resizeMode="contain"
-          style={{width: 150, height: 150}}
-        />
+        {image ? (
+          <SvgUri width={120} height={120} uri={image} />
+        ) : (
+          <ActivityIndicator size="large" />
+        )}
       </View>
-      <Spacer height={16} />
       <Text value={`#${order || ""}`} />
       <Spacer height={8} />
       <Text variant="title" color="black" value={name} />
