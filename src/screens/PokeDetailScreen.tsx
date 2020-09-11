@@ -40,7 +40,7 @@ interface Props {
   navigation: PokeDetailNavigation;
 }
 
-const PokeDetailScreen: React.FC<Props> = ({route}) => {
+const PokeDetailScreen: React.FC<Props> = ({route, navigation}) => {
   const {data, isLoading} = useGetPokeDetail({name: route.params.name});
 
   if (!data || isLoading) {
@@ -56,15 +56,12 @@ const PokeDetailScreen: React.FC<Props> = ({route}) => {
   } = data.sprites;
   const image = other.dream_world.front_default || "";
 
+  navigation.setOptions({title: data.name});
+
   return (
     <ScrollView style={styles.root}>
       <Container>
         <View style={styles.images}>
-          <Text
-            variant="title"
-            value={data.name}
-            style={{textTransform: "capitalize"}}
-          />
           <Spacer height={12} />
           <SvgUri width={175} height={175} uri={image} />
           <Spacer height={16} />
