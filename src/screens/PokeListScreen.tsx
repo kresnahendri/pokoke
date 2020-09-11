@@ -1,6 +1,11 @@
 import React from "react";
-import {Button, Text} from "react-native";
+import {ActivityIndicator, ListRenderItemInfo, View} from "react-native";
+import {FlatList, TouchableOpacity} from "react-native-gesture-handler";
 
+import Container from "../components/Container";
+import Spacer from "../components/Spacer";
+import Text from "../components/Text";
+import {Pokemon} from "../hooks/http/poke/pokeModels";
 import {useGetPokeList} from "../hooks/http/poke/useGetPokeList";
 import {useGetPokeTypeList} from "../hooks/http/poke/useGetPokeTypeList";
 import {
@@ -19,16 +24,38 @@ const PokeListScreen: React.FC<Props> = ({navigation}) => {
 
   // TODO: use as component's data provider
   console.log(pokeType);
-  console.log(pokeList);
+
+  const shouldRenderLoader =
+    pokeList.isLoading || pokeList.isFetchingMore || pokeList.isFetching;
+
+  const renderItem = ({item: pokemon}: ListRenderItemInfo<Pokemon>) => (
+    <View>
+      <TouchableOpacity
+        onPress={() => {
+          navigation.navigate("PokeDetail", {name: pokemon.name});
+        }}>
+        {/* TODO: Change with card or other beautiful component */}
+        <Text value={pokemon.name} />
+      </TouchableOpacity>
+    </View>
+  );
 
   return (
-    <>
-      <Text>PokeList</Text>
-      <Button
-        onPress={() => navigation.navigate("PokeDetail", {name: "dummy_name"})}
-        title="GoToPokeDetailScreen"
-      />
-    </>
+    <Container>
+      {pokeList.data && (
+        <FlatList
+          data={pokeList.data.flatMap((x) => x.results)}
+          renderItem={renderItem}
+          keyExtractor={(item) => item.name + item.url}
+        />
+      )}
+      {shouldRenderLoader && (
+        <>
+          <Spacer height={16} />
+          <ActivityIndicator />
+        </>
+      )}
+    </Container>
   );
 };
 
