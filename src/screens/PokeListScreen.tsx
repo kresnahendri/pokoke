@@ -6,9 +6,15 @@ import {
   StyleSheet,
   View,
 } from "react-native";
-import {FlatList, TouchableOpacity} from "react-native-gesture-handler";
+import {
+  FlatList,
+  ScrollView,
+  TouchableOpacity,
+} from "react-native-gesture-handler";
 
 import Container from "../components/Container";
+import Pill from "../components/Pill";
+import Spacer from "../components/Spacer";
 import PokeCardContainer from "../containers/PokeCardContainer";
 import {useScrollTreshold} from "../hooks/dom/useScrollTreshold";
 import {Pokemon} from "../hooks/http/poke/pokeModels";
@@ -37,6 +43,7 @@ const PokeListScreen: React.FC<Props> = ({navigation}) => {
   const pokeType = useGetPokeTypeList();
   const pokeList = useGetPokeList();
   const [isWide, setIsWide] = useState(true);
+  const [selectedType, setSectedType] = useState("all");
   const {isTresholdReached, reset: resetScrollDetector} = useScrollTreshold(
     200,
   );
@@ -49,9 +56,6 @@ const PokeListScreen: React.FC<Props> = ({navigation}) => {
       !pokeList.isLoading;
     isAllowToFetchMore ? pokeList.fetchMore() : resetScrollDetector();
   }, [isTresholdReached, pokeList]);
-
-  // TODO: use as component's data provider
-  console.log(pokeType);
 
   const shouldRenderLoader =
     pokeList.isLoading || pokeList.isFetchingMore || pokeList.isFetching;
@@ -86,8 +90,26 @@ const PokeListScreen: React.FC<Props> = ({navigation}) => {
           ),
       };
 
+  const renderPill = (name: string) => {
+    return (
+      <>
+        <TouchableOpacity onPress={() => setSectedType(name)}>
+          <Pill key={name} isActive={selectedType === name} value={name} />
+        </TouchableOpacity>
+        <Spacer width={8} />
+      </>
+    );
+  };
   return (
     <Container>
+      <ScrollView
+        horizontal={true}
+        style={{height: 70, paddingLeft: 10, paddingVertical: 12}}
+        contentContainerStyle={{alignItems: "flex-end"}}
+        showsHorizontalScrollIndicator={false}>
+        {renderPill("all")}
+        {pokeType.data?.results.map(({name}) => renderPill(name))}
+      </ScrollView>
       {pokeList.data && (
         <FlatList
           onLayout={({nativeEvent}) => {
