@@ -1,5 +1,10 @@
 import React from "react";
-import {ActivityIndicator, ListRenderItemInfo, View} from "react-native";
+import {
+  ActivityIndicator,
+  ListRenderItemInfo,
+  Platform,
+  View,
+} from "react-native";
 import {FlatList, TouchableOpacity} from "react-native-gesture-handler";
 
 import Container from "../components/Container";
@@ -38,6 +43,20 @@ const PokeListScreen: React.FC<Props> = ({navigation}) => {
     </View>
   );
 
+  const flatListProps =
+    Platform.OS === "web"
+      ? {}
+      : {
+          onEndReachedThreshold: 0.5,
+          onEndReached: () => pokeList.fetchMore(),
+          refreshing: pokeList.isLoading,
+          onRefresh: () => {
+            if (pokeList.refetch) {
+              pokeList.refetch();
+            }
+          },
+        };
+
   return (
     <Container>
       {pokeList.data && (
@@ -45,8 +64,6 @@ const PokeListScreen: React.FC<Props> = ({navigation}) => {
           data={pokeList.data.flatMap((x) => x.results)}
           renderItem={renderItem}
           keyExtractor={(item) => item.name + item.url}
-          onEndReachedThreshold={0.5}
-          onEndReached={() => pokeList.fetchMore()}
           ListFooterComponent={() =>
             shouldRenderLoader ? (
               <ActivityIndicator style={{paddingVertical: 16}} />
@@ -54,12 +71,7 @@ const PokeListScreen: React.FC<Props> = ({navigation}) => {
               <View />
             )
           }
-          refreshing={pokeList.isLoading}
-          onRefresh={() => {
-            if (pokeList.refetch) {
-              pokeList.refetch();
-            }
-          }}
+          {...flatListProps}
         />
       )}
     </Container>

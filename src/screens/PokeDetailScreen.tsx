@@ -3,6 +3,7 @@ import React from "react";
 import {
   ActivityIndicator,
   Image,
+  Platform,
   ScrollView,
   StyleSheet,
   View,
@@ -63,7 +64,16 @@ const PokeDetailScreen: React.FC<Props> = ({route, navigation}) => {
       <Container>
         <View style={styles.images}>
           <Spacer height={12} />
-          <SvgUri width={175} height={175} uri={image} />
+          {Platform.OS === "web" ? (
+            <Image
+              style={{width: 120, height: 120}}
+              source={{uri: image}}
+              resizeMode="contain"
+            />
+          ) : (
+            <SvgUri width={175} height={175} uri={image} />
+          )}
+
           <Spacer height={16} />
           <View style={styles.thumbnails}>
             {[back_default, back_shiny, front_default, front_shiny].map(

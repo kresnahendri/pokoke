@@ -1,5 +1,11 @@
 import React from "react";
-import {ActivityIndicator, StyleSheet, View} from "react-native";
+import {
+  ActivityIndicator,
+  Image,
+  Platform,
+  StyleSheet,
+  View,
+} from "react-native";
 import {SvgUri} from "react-native-svg";
 
 import Colors from "../constants/Colors";
@@ -59,7 +65,15 @@ const PokeCard: React.FC<Props> = React.memo(({name, image, order, types}) => {
     <View style={styles.root}>
       <View style={styles.imageContainer}>
         {image ? (
-          <SvgUri width={120} height={120} uri={image} />
+          Platform.OS === "web" ? (
+            <Image
+              style={{width: 120, height: 120}}
+              source={{uri: image}}
+              resizeMode="contain"
+            />
+          ) : (
+            <SvgUri width={120} height={120} uri={image} />
+          )
         ) : (
           <ActivityIndicator size="large" />
         )}
