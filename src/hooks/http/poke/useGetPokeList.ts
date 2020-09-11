@@ -16,7 +16,7 @@ interface Args {
   limit?: number;
 }
 
-export const useGetPokeList = (args: Args = {offset: 0, limit: 10}) => {
+export const useGetPokeList = (args: Args = {offset: 0, limit: 12}) => {
   const result = useInfiniteQuery<GetPokeListResponse>(
     "Poke_useGetPokeList",
     (_, cursor) => {
