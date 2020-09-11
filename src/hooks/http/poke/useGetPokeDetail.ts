@@ -1,7 +1,9 @@
+import axios from "axios";
 import {queryCache, useQuery} from "react-query";
 
 import config from "../../../config";
 import {fetcher} from "../../../lib/fetcher";
+import {PromiseX} from "../../../types/common";
 import {PokeMove, PokeSprite, PokeType} from "./pokeModels";
 
 interface Args {
@@ -19,11 +21,21 @@ interface GetPokeDetailResponse {
 export const useGetPokeDetail = ({name}: Args) => {
   const result = useQuery<GetPokeDetailResponse>(
     `Poke_useGetPokeDetail_${name}`,
-    () =>
-      fetcher<GetPokeDetailResponse>({
+    () => {
+      const source = axios.CancelToken.source();
+
+      const promise = fetcher<GetPokeDetailResponse>({
         url: `${config.POKE_API_URL}/pokemon/${name}`,
         method: "get",
-      }),
+        cancelToken: source.token,
+      }) as PromiseX<GetPokeDetailResponse>;
+
+      promise.cancel = () => {
+        source.cancel("Query was cancelled by React Query");
+      };
+
+      return promise;
+    },
     {
       refetchOnWindowFocus: false,
       initialData: () =>
