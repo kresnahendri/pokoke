@@ -1,6 +1,8 @@
 import React from "react";
 import {Button, Text} from "react-native";
 
+import {useGetPokeList} from "../hooks/http/poke/useGetPokeList";
+import {useGetPokeTypeList} from "../hooks/http/poke/useGetPokeTypeList";
 import {
   PokeListNavigation,
   PokeListRoute,
@@ -12,6 +14,13 @@ interface Props {
 }
 
 const PokeListScreen: React.FC<Props> = ({navigation}) => {
+  const pokeType = useGetPokeTypeList();
+  const pokeList = useGetPokeList();
+
+  // TODO: use as component's data provider
+  console.log(pokeType);
+  console.log(pokeList);
+
   return (
     <>
       <Text>PokeList</Text>
