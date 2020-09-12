@@ -91,7 +91,6 @@ const PokeDetailScreen: React.FC<Props> = ({route, navigation}) => {
         ) : (
           <SvgUri width={175} height={175} uri={image} />
         )}
-
         <Spacer height={16} />
         <View style={styles.thumbnails}>
           {[back_default, back_shiny, front_default, front_shiny].map(
@@ -154,6 +153,7 @@ const PokeDetailScreen: React.FC<Props> = ({route, navigation}) => {
       {data.types && <PokeTypeBadge types={data.types} />}
     </View>;
   };
+
   const renderStats = () => {
     return (
       <View>

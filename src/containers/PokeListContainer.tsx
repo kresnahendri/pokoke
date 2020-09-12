@@ -54,6 +54,7 @@ const PokeListContainer: React.FC<Props> = ({type_, navigation}) => {
   useEffect(() => {
     refetch();
   }, [type_]);
+
   useEffect(() => {
     const isAllowToFetchMore =
       isTresholdReached && !isFetching && !isFetchingMore;

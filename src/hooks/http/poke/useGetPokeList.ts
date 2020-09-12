@@ -43,6 +43,7 @@ export const useGetPokeList = ({
                 nextUrl: pokeList.next,
               };
             });
+
           return serialized;
         });
       });

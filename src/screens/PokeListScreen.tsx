@@ -1,5 +1,5 @@
 import React, {lazy, Suspense, useState} from "react";
-import {ActivityIndicator, Platform, StyleSheet, View} from "react-native";
+import {ActivityIndicator, StyleSheet, View} from "react-native";
 import {ScrollView, TouchableOpacity} from "react-native-gesture-handler";
 
 import Container from "../components/Container";
