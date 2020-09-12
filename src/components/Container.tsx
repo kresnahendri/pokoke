@@ -9,7 +9,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   rootW: {
-    paddingHorizontal: "15%",
+    paddingHorizontal: "20%",
   },
 });
 
@@ -17,7 +17,7 @@ interface Props {
   style?: StyleProp<ViewStyle>;
 }
 
-const isWide = Dimensions.get("window").width > 600;
+const isWide = Dimensions.get("window").width > 800;
 
 const Container: React.FC<Props> = ({style, children}) => {
   return (

@@ -16,16 +16,15 @@ const PokeListContainer = lazy(() => import("../containers/PokeListContainer"));
 
 const styles = StyleSheet.create({
   scrollWrapperFirst: {
-    flex: 1,
     zIndex: 1,
   },
   scrollWrapperSecond: {
     height: 64,
     alignContent: "center",
+    backgroundColor: Colors.white,
   },
   typeScrollView: {
     height: 50,
-    backgroundColor: Colors.white,
     flexDirection: "row",
   },
   typeScrollViewContainer: {
@@ -61,7 +60,7 @@ const PokeListScreen: React.FC<Props> = ({navigation}) => {
   };
 
   return (
-    <Container>
+    <>
       <View style={styles.scrollWrapperFirst}>
         <View style={styles.scrollWrapperSecond}>
           <ScrollView
@@ -77,11 +76,13 @@ const PokeListScreen: React.FC<Props> = ({navigation}) => {
         </View>
       </View>
       <View style={styles.pokeListContainer}>
-        <Suspense fallback={<ActivityIndicator />}>
-          <PokeListContainer type_={selectedType} navigation={navigation} />
-        </Suspense>
+        <Container>
+          <Suspense fallback={<ActivityIndicator />}>
+            <PokeListContainer type_={selectedType} navigation={navigation} />
+          </Suspense>
+        </Container>
       </View>
-    </Container>
+    </>
   );
 };
 

@@ -1,6 +1,6 @@
 import {StatusBar} from "expo-status-bar";
-import React, {Suspense} from "react";
-import {ActivityIndicator, Platform} from "react-native";
+import React from "react";
+import {Platform} from "react-native";
 import {SafeAreaView} from "react-native-safe-area-context";
 
 import RootNavigation from "./src/navigations/RootNavigation";

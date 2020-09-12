@@ -8,7 +8,6 @@ import Text from "./Text";
 const styles = StyleSheet.create({
   root: {
     flex: 1,
-    // backgroundColor: Colors.white,
   },
   wrapper: {
     justifyContent: "center",

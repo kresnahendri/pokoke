@@ -40,7 +40,7 @@ const PokeListContainer: React.FC<Props> = ({type_, navigation}) => {
     fetchMore,
   } = useGetPokeList({
     type_,
-    limit: 12,
+    limit: 18,
     offset: 0,
   });
   const [isWide, setIsWide] = useState(true);
@@ -61,9 +61,8 @@ const PokeListContainer: React.FC<Props> = ({type_, navigation}) => {
   }, [isTresholdReached, isFetching, isFetchingMore]);
 
   useEffect(() => {
-    if (data) {
-      const dataLenght = data.filter((d) => d.length > 0).length;
-      const isLess = dataLenght > 0 && dataLenght < 4;
+    if (flattenData) {
+      const isLess = flattenData?.length > 0 && flattenData?.length < 12;
       if (isLess) {
         fetchMore();
       }
@@ -125,10 +124,9 @@ const PokeListContainer: React.FC<Props> = ({type_, navigation}) => {
           {...flatListProps}
         />
       )}
-      {(shouldRenderLoader && isWeb) ||
-        (shouldRenderLoader && flattenData?.length === 0 && (
-          <ActivityIndicator style={{paddingVertical: 16}} />
-        ))}
+      {shouldRenderLoader && isWeb && (
+        <ActivityIndicator style={{paddingVertical: 16}} />
+      )}
     </>
   );
 };
