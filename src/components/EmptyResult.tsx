@@ -2,14 +2,13 @@ import React from "react";
 import {Image, StyleSheet, View} from "react-native";
 import {ScrollView} from "react-native-gesture-handler";
 
-import Colors from "../constants/Colors";
 import Spacer from "./Spacer";
 import Text from "./Text";
 
 const styles = StyleSheet.create({
   root: {
     flex: 1,
-    backgroundColor: Colors.white,
+    // backgroundColor: Colors.white,
   },
   wrapper: {
     justifyContent: "center",
@@ -29,11 +28,10 @@ const EmptyResult: React.FC<Props> = ({text}) => {
       <View style={styles.wrapper}>
         <Spacer height={60} />
         <Image
-          source={require("../assets/pika_hello.jpg")}
-          style={{width: 200, height: 200, alignSelf: "center"}}
+          source={require("../assets/pika_sad.png")}
+          style={{width: 300, height: 200, alignSelf: "center"}}
           resizeMode="contain"
         />
-        <Spacer height={24} />
         <Text
           value={text}
           style={{
