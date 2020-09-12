@@ -34,7 +34,7 @@ const styles = StyleSheet.create({
     marginVertical: 4,
   },
   imageContainer: {
-    height: 150,
+    height: 100,
     justifyContent: "center",
   },
   typeContainer: {
@@ -64,19 +64,11 @@ const PokeCard: React.FC<Props> = React.memo(({name, image, order, types}) => {
   return (
     <View style={styles.root}>
       <View style={styles.imageContainer}>
-        {image ? (
-          Platform.OS === "web" ? (
-            <Image
-              style={{width: 120, height: 120}}
-              source={{uri: image}}
-              resizeMode="contain"
-            />
-          ) : (
-            <SvgUri width={120} height={120} uri={image} />
-          )
-        ) : (
-          <ActivityIndicator size="large" />
-        )}
+        <Image
+          style={{width: 100, height: 100}}
+          source={{uri: image}}
+          resizeMode="contain"
+        />
       </View>
       <Text value={`#${order || ""}`} />
       <Spacer height={8} />

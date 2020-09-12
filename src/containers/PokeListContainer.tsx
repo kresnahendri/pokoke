@@ -40,6 +40,8 @@ const PokeListContainer: React.FC<Props> = ({type_, navigation}) => {
     fetchMore,
   } = useGetPokeList({
     type_,
+    limit: 12,
+    offset: 0,
   });
   const [isWide, setIsWide] = useState(true);
   const {isTresholdReached, reset: resetScrollDetector} = useScrollTreshold(
@@ -52,27 +54,21 @@ const PokeListContainer: React.FC<Props> = ({type_, navigation}) => {
   useEffect(() => {
     refetch();
   }, [type_]);
-
   useEffect(() => {
     const isAllowToFetchMore =
       isTresholdReached && !isFetching && !isFetchingMore;
     isAllowToFetchMore ? fetchMore() : resetScrollDetector();
   }, [isTresholdReached, isFetching, isFetchingMore]);
 
-  /**
-   * ! Not Efficient, because if data always empty
-   * ! it will nostop to refetch, dangerous
-   */
-  // useEffect(() => {
-  //   if (pokeList.data) {
-  //     const isDataExist =
-  //       pokeList.data.filter((data) => data.length > 0).length > 0;
-  //     if (!isDataExist) {
-  //       console.log("FetchMore");
-  //       pokeList.fetchMore();
-  //     }
-  //   }
-  // }, [pokeList.data]);
+  useEffect(() => {
+    if (data) {
+      const dataLenght = data.filter((d) => d.length > 0).length;
+      const isLess = dataLenght > 0 && dataLenght < 4;
+      if (isLess) {
+        fetchMore();
+      }
+    }
+  }, [data]);
 
   const renderItem = ({
     item: pokemon,
@@ -85,7 +81,7 @@ const PokeListContainer: React.FC<Props> = ({type_, navigation}) => {
           }}>
           <PokeCard
             name={pokemon.name}
-            image={pokemon.sprites.other.dream_world.front_default}
+            image={pokemon.sprites.front_shiny}
             order={pokemon.order}
             types={pokemon.types}
           />
