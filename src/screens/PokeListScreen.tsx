@@ -1,17 +1,18 @@
-import React, {useState} from "react";
-import {StyleSheet, View} from "react-native";
+import React, {lazy, Suspense, useState} from "react";
+import {ActivityIndicator, Platform, StyleSheet, View} from "react-native";
 import {ScrollView, TouchableOpacity} from "react-native-gesture-handler";
 
 import Container from "../components/Container";
 import Pill from "../components/Pill";
 import Spacer from "../components/Spacer";
 import Colors from "../constants/Colors";
-import PokeListContainer from "../containers/PokeListContainer";
 import {useGetPokeTypeList} from "../hooks/http/poke/useGetPokeTypeList";
 import {
   PokeListNavigation,
   PokeListRoute,
 } from "../navigations/NavigationProps";
+
+const PokeListContainer = lazy(() => import("../containers/PokeListContainer"));
 
 const styles = StyleSheet.create({
   scrollWrapperFirst: {
@@ -31,6 +32,10 @@ const styles = StyleSheet.create({
     alignItems: "flex-end",
     paddingVertical: 10,
   },
+  pokeListContainer: {
+    flex: 100,
+    paddingTop: Platform.OS === "web" ? 10 : 60,
+  },
 });
 interface Props {
   route: PokeListRoute;
@@ -44,7 +49,10 @@ const PokeListScreen: React.FC<Props> = ({navigation}) => {
   const renderPill = (name: string) => {
     return (
       <>
-        <TouchableOpacity onPress={() => setSectedType(name)}>
+        <TouchableOpacity
+          onPress={() => {
+            setSectedType(name);
+          }}>
           <Pill key={name} isActive={selectedType === name} value={name} />
         </TouchableOpacity>
         <Spacer width={8} />
@@ -68,8 +76,10 @@ const PokeListScreen: React.FC<Props> = ({navigation}) => {
           </ScrollView>
         </View>
       </View>
-      <View style={{flex: 100, paddingTop: 60}}>
-        <PokeListContainer type_={selectedType} navigation={navigation} />
+      <View style={styles.pokeListContainer}>
+        <Suspense fallback={<ActivityIndicator />}>
+          <PokeListContainer type_={selectedType} navigation={navigation} />
+        </Suspense>
       </View>
     </Container>
   );

@@ -3,7 +3,7 @@ import {useInfiniteQuery} from "react-query";
 import config from "../../../config";
 import {fetcher} from "../../../lib/fetcher";
 import {Pokemon} from "./pokeModels";
-import {GetPokeDetailResponse} from "./useGetPokeDetail";
+import {fetchPokeDetail, GetPokeDetailResponse} from "./useGetPokeDetail";
 
 interface GetPokeListResponse {
   count: number;
@@ -19,27 +19,31 @@ interface Args {
   type_: string;
 }
 
-export const useGetPokeList = (
-  args: Args = {offset: 0, limit: 12, type_: "all"},
-) => {
+export const useGetPokeList = ({
+  offset = 0,
+  limit = 12,
+  type_ = "all",
+}: Args) => {
+  const defaultUrl = `${config.POKE_API_URL}/pokemon?offset=${offset}&limit=${limit}`;
+
   const result = useInfiniteQuery<GetPokeDetailResponse[]>(
-    "Poke_useGetPokeList",
+    `Poke_useGetPokeList_${type_}`,
     (_, nextUrl) => {
+      if (nextUrl === null) {
+        return Promise.resolve([]);
+      }
       const serializedResult = fetcher<GetPokeListResponse>({
-        url:
-          nextUrl ||
-          `${config.POKE_API_URL}/pokemon?offset=${args.offset}&limit=${args.limit}`,
-      }).then((pokeList) => {
-        const fetchDetails = pokeList.results.map(({name}) => {
-          return fetcher<GetPokeDetailResponse>({
-            url: `${config.POKE_API_URL}/pokemon/${name}`,
-          });
-        });
+        url: nextUrl || defaultUrl,
+      }).then(async (pokeList) => {
+        const fetchDetails = pokeList.results.map(({name}) =>
+          fetchPokeDetail(name),
+        );
+
         return Promise.all(fetchDetails).then((poke) => {
-          return poke
+          const serialized = poke
             .filter(({types}) => {
-              const found = types.find((t) => t.type.name === args.type_);
-              return found || args.type_ === "all";
+              const found = types.find((t) => t.type.name === type_);
+              return found || type_ === "all";
             })
             .map((it) => {
               return {
@@ -47,6 +51,7 @@ export const useGetPokeList = (
                 nextUrl: pokeList.next,
               };
             });
+          return serialized;
         });
       });
 
@@ -54,8 +59,7 @@ export const useGetPokeList = (
     },
     {
       refetchOnWindowFocus: false,
-      getFetchMore: (last, _) => last[last.length - 1].nextUrl,
-      suspense: true,
+      getFetchMore: (last, _) => last[last.length - 1]?.nextUrl,
     },
   );
 

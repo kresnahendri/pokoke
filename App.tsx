@@ -19,10 +19,8 @@ const SwitchSafe: React.FC = ({children}) => {
 
 export default function App() {
   return (
-    <Suspense fallback={<ActivityIndicator />}>
-      <SwitchSafe>
-        <RootNavigation />
-      </SwitchSafe>
-    </Suspense>
+    <SwitchSafe>
+      <RootNavigation />
+    </SwitchSafe>
   );
 }

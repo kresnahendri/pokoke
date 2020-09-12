@@ -16,27 +16,29 @@ export interface GetPokeDetailResponse {
   sprites: PokeSprite;
   types: PokeType[];
   moves: PokeMove[];
-  nextUrl?: string;
+  nextUrl: string | null;
 }
+
+export const fetchPokeDetail = (name: string) => {
+  const source = axios.CancelToken.source();
+
+  const promise = fetcher<GetPokeDetailResponse>({
+    url: `${config.POKE_API_URL}/pokemon/${name}`,
+    method: "get",
+    cancelToken: source.token,
+  }) as PromiseX<GetPokeDetailResponse>;
+
+  promise.cancel = () => {
+    source.cancel("Query was cancelled by React Query");
+  };
+
+  return promise;
+};
 
 export const useGetPokeDetail = ({name}: Args) => {
   const result = useQuery<GetPokeDetailResponse>(
     `Poke_useGetPokeDetail_${name}`,
-    () => {
-      const source = axios.CancelToken.source();
-
-      const promise = fetcher<GetPokeDetailResponse>({
-        url: `${config.POKE_API_URL}/pokemon/${name}`,
-        method: "get",
-        cancelToken: source.token,
-      }) as PromiseX<GetPokeDetailResponse>;
-
-      promise.cancel = () => {
-        source.cancel("Query was cancelled by React Query");
-      };
-
-      return promise;
-    },
+    () => fetchPokeDetail(name),
     {
       refetchOnWindowFocus: false,
       initialData: () =>
