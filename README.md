@@ -76,3 +76,7 @@ Fetch pokemon list, and surprisingly, you will only get `name` as real value, fo
 Filter pokemon list based on their type. And... I'm didn't found how to filter using `type` query params. 
 There is another way, you can hit `/type/<type_name>`, but.. you will get pokemon data as a total (not paginated). So, as far as I can filtering data based on type is done in front end it self (you can see in `useGetPokeList.ts` file).
 Maybe, pokeapi should create something like this `/pokemon?type=dragon` 😁.
+
+## Testing (\_\_test\_\_)
+
+There's is 2 types of testing, that is `Component` and `Hooks`. component just to snapshot the dom because most of validation component props has be done with typescript typing. for hooks (fetching API) I use `@testing-library/react-hooks` for expect the result. `react-query` focus on keyquery of the request. So, mock data just enough to match the keyquery and result data structure and type.
