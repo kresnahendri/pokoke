@@ -11,7 +11,7 @@ import {FlatList, TouchableOpacity} from "react-native-gesture-handler";
 import EmptyResult from "../components/EmptyResult";
 import PokeCard from "../components/PokeCard";
 import {useScrollTreshold} from "../hooks/dom/useScrollTreshold";
-import {GetPokeDetailResponse} from "../hooks/http/poke/useGetPokeDetail";
+import {GetPokeDetailResponse} from "../hooks/http/poke/pokeModels";
 import {useGetPokeList} from "../hooks/http/poke/useGetPokeList";
 import {PokeListNavigation} from "../navigations/NavigationProps";
 

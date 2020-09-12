@@ -20,7 +20,7 @@ const AppBar = () => {
       <Spacer width={8} />
       <Text
         variant="title"
-        value="Pokoke"
+        value="Pokóke"
         style={{
           color: Colors.white,
           fontSize: 24,
