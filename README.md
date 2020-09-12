@@ -71,7 +71,7 @@ This API is so much "fun" 😜. To get list of pokemon and the details you need 
 
 Fetch pokemon list, and surprisingly, you will only get `name` as real value, for the rest of data you need to fetch the detail to another endpoint. let say if we will load 20 pokemon data, so you will hit api 21 in total. 1 for the list and 20 for the details.
 
-### Get pokemon list with filet type
+### Get pokemon list with filter type
 
 Filter pokemon list based on their type. And... I'm didn't found how to filter using `type` query params. 
 There is another way, you can hit `/type/<type_name>`, but.. you will get pokemon data as a total (not paginated). So, as far as I can filtering data based on type is done in front end it self (you can see in `useGetPokeList.ts` file).
