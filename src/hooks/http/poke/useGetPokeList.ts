@@ -2,16 +2,8 @@ import {useInfiniteQuery} from "react-query";
 
 import config from "../../../config";
 import {fetcher} from "../../../lib/fetcher";
-import {Pokemon} from "./pokeModels";
-import {fetchPokeDetail, GetPokeDetailResponse} from "./useGetPokeDetail";
-
-interface GetPokeListResponse {
-  count: number;
-  next: string | null;
-  previous: string | null;
-  results: Pokemon[];
-  serializedResults: GetPokeDetailResponse[];
-}
+import {GetPokeDetailResponse, GetPokeListResponse} from "./pokeModels";
+import {fetchPokeDetail} from "./useGetPokeDetail";
 
 interface Args {
   offset?: number;

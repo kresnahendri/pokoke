@@ -1,15 +1,9 @@
 import React from "react";
-import {
-  ActivityIndicator,
-  Image,
-  Platform,
-  StyleSheet,
-  View,
-} from "react-native";
-import {SvgUri} from "react-native-svg";
+import {Image, StyleSheet, View} from "react-native";
 
 import Colors from "../constants/Colors";
 import {PokeType} from "../hooks/http/poke/pokeModels";
+import PokeTypeBadge from "./PokeTypeBadge";
 import Spacer from "./Spacer";
 import Text from "./Text";
 
@@ -36,20 +30,6 @@ const styles = StyleSheet.create({
   imageContainer: {
     height: 100,
     justifyContent: "center",
-  },
-  typeContainer: {
-    flexDirection: "row",
-    minHeight: 21,
-  },
-  type_: {
-    borderColor: "black",
-    borderWidth: 1,
-    borderRadius: 4,
-    paddingHorizontal: 4,
-    paddingVertical: 2,
-    margin: 4,
-    justifyContent: "center",
-    alignItems: "center",
   },
 });
 
@@ -79,14 +59,7 @@ const PokeCard: React.FC<Props> = React.memo(({name, image, order, types}) => {
         style={{textTransform: "capitalize"}}
       />
       <Spacer height={8} />
-      <View style={styles.typeContainer}>
-        {types &&
-          types.map((type_: PokeType) => (
-            <View style={styles.type_} key={type_.slot}>
-              <Text value={type_.type.name} variant="caption" />
-            </View>
-          ))}
-      </View>
+      {types && <PokeTypeBadge types={types} />}
     </View>
   );
 });

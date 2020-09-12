@@ -2,11 +2,7 @@ import {useQuery} from "react-query";
 
 import config from "../../../config";
 import {fetcher} from "../../../lib/fetcher";
-import {Pokemon} from "./pokeModels";
-
-interface GetPokeTypeListResponse {
-  results: Pokemon[];
-}
+import {GetPokeTypeListResponse} from "./pokeModels";
 
 export const useGetPokeTypeList = () => {
   const result = useQuery<GetPokeTypeListResponse>(

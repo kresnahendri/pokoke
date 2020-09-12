@@ -33,7 +33,6 @@ const styles = StyleSheet.create({
   },
   pokeListContainer: {
     flex: 100,
-    paddingTop: Platform.OS === "web" ? 10 : 60,
   },
 });
 interface Props {

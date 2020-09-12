@@ -4,19 +4,10 @@ import {queryCache, useQuery} from "react-query";
 import config from "../../../config";
 import {fetcher} from "../../../lib/fetcher";
 import {PromiseX} from "../../../types/common";
-import {PokeMove, PokeSprite, PokeType} from "./pokeModels";
+import {GetPokeDetailResponse} from "./pokeModels";
 
 interface Args {
   name: string;
-}
-
-export interface GetPokeDetailResponse {
-  name: string;
-  order: number;
-  sprites: PokeSprite;
-  types: PokeType[];
-  moves: PokeMove[];
-  nextUrl: string | null;
 }
 
 export const fetchPokeDetail = (name: string) => {
