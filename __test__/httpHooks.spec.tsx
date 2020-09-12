@@ -5,10 +5,10 @@ import {useInfiniteQuery, useQuery} from "react-query";
 import {
   GetPokeDetailResponse,
   GetPokeTypeListResponse,
-} from "../hooks/http/poke/pokeModels";
-import {useGetPokeDetail} from "../hooks/http/poke/useGetPokeDetail";
-import {useGetPokeList} from "../hooks/http/poke/useGetPokeList";
-import {useGetPokeTypeList} from "../hooks/http/poke/useGetPokeTypeList";
+} from "../src/hooks/http/poke/pokeModels";
+import {useGetPokeDetail} from "../src/hooks/http/poke/useGetPokeDetail";
+import {useGetPokeList} from "../src/hooks/http/poke/useGetPokeList";
+import {useGetPokeTypeList} from "../src/hooks/http/poke/useGetPokeTypeList";
 
 const mockPayloadPokeDetailResponse: GetPokeDetailResponse = {
   name: "poketest",

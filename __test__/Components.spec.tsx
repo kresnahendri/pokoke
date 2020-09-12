@@ -2,15 +2,15 @@
 import * as React from "react";
 import * as renderer from "react-test-renderer";
 
-import AppBar from "../components/AppBar";
-import Container from "../components/Container";
-import EmptyResult from "../components/EmptyResult";
-import Pill from "../components/Pill";
-import PokeCard from "../components/PokeCard";
-import PokeTypeBadge from "../components/PokeTypeBadge";
-import ProgressLine from "../components/ProgressLine";
-import Spacer from "../components/Spacer";
-import Text from "../components/Text";
+import AppBar from "../src/components/AppBar";
+import Container from "../src/components/Container";
+import EmptyResult from "../src/components/EmptyResult";
+import Pill from "../src/components/Pill";
+import PokeCard from "../src/components/PokeCard";
+import PokeTypeBadge from "../src/components/PokeTypeBadge";
+import ProgressLine from "../src/components/ProgressLine";
+import Spacer from "../src/components/Spacer";
+import Text from "../src/components/Text";
 
 describe("Copmonents", () => {
   it("snapshot test - AppBar", () => {
