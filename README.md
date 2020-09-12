@@ -29,10 +29,10 @@ Prerequisites:
 - install expo-cli
 
 ```bash
-yarn
-yarn:ios      # for ios emulator
-yarn:web      # for web
-yarn:android  # for android simulator
+yarn          # install deps
+yarn ios      # for ios emulator
+yarn web      # for web
+yarn android  # for android simulator
 yarn start    # you will be provided options to run the app
 ```
 
