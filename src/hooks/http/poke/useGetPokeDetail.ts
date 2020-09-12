@@ -10,12 +10,13 @@ interface Args {
   name: string;
 }
 
-interface GetPokeDetailResponse {
+export interface GetPokeDetailResponse {
   name: string;
   order: number;
   sprites: PokeSprite;
   types: PokeType[];
   moves: PokeMove[];
+  nextUrl?: string;
 }
 
 export const useGetPokeDetail = ({name}: Args) => {

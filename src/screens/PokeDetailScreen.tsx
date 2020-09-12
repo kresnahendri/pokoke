@@ -1,4 +1,3 @@
-/* eslint-disable react/no-array-index-key */
 import React from "react";
 import {
   ActivityIndicator,
@@ -79,6 +78,7 @@ const PokeDetailScreen: React.FC<Props> = ({route, navigation}) => {
             {[back_default, back_shiny, front_default, front_shiny].map(
               (thumbnail, i) => (
                 <Image
+                  // eslint-disable-next-line react/no-array-index-key
                   key={i}
                   source={{uri: thumbnail}}
                   style={{width: 70, height: 70}}
@@ -96,12 +96,13 @@ const PokeDetailScreen: React.FC<Props> = ({route, navigation}) => {
               <Text
                 value={move.name}
                 key={move.name}
-                style={{marginRight: 10}}
+                style={{marginRight: 10, textDecorationLine: "underline"}}
               />
             ))}
           </View>
         </View>
       </Container>
+      <Spacer height={16} />
     </ScrollView>
   );
 };
