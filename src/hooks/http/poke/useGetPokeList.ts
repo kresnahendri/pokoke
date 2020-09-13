@@ -52,7 +52,7 @@ export const useGetPokeList = ({
     },
     {
       refetchOnWindowFocus: false,
-      getFetchMore: (last, _) => last[last.length - 1]?.nextUrl,
+      getFetchMore: (last, _) => last[last.length - 1]?.nextUrl || null,
     },
   );
 

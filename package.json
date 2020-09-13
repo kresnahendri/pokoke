@@ -26,7 +26,7 @@
     "ios": "expo start --ios",
     "web": "expo start --web",
     "eject": "expo eject",
-    "publish": "yarn publish:expo && yarn publish:web",
+    "publish:all": "yarn publish:expo && yarn publish:web",
     "publish:expo": "npx expo-optimize && expo publish",
     "publish:web": "expo build:web && cd web-build && vercel --prod && cd ..",
     "test": "jest"
