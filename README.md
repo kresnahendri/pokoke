@@ -76,7 +76,7 @@ Fetch pokemon list, and surprisingly, you will only get `name` as real value, fo
 
 Filter pokemon list based on their type. And... I'm didn't found how to filter using `type` query params. 
 There is another way, you can hit `/type/<type_name>`, but.. you will get pokemon data as a total (not paginated). So, as far as I can filtering data based on type is done in front end it self (you can see in `useGetPokeList.ts` file).
-Maybe, pokeapi should create something like this `/pokemon?type=dragon` 😁.
+Maybe, pokeapi should create something like this `/pokemon?type=dragon` 😁. So litte bit tricky to fetch all result and paginated. I use `/pokemon` of non-typed list and `/type/<type_name>` for typed list. for type list I paginate based on value of limit argument.
 
 ## Testing (\_\_test\_\_)
 
