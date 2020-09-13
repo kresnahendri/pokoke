@@ -15,6 +15,7 @@ If you want to run expo app, pleas install expo app client in your smartphone
 ## Tools
 
 - react
+- react-native
 - typescript
 - expo
 - react-query
