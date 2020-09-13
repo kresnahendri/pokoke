@@ -34,6 +34,9 @@ const styles = StyleSheet.create({
   pokeListContainer: {
     flex: 100,
   },
+  typeRowItem: {
+    flexDirection: "row",
+  },
 });
 interface Props {
   route: PokeListRoute;
@@ -46,7 +49,7 @@ const PokeListScreen: React.FC<Props> = ({navigation}) => {
 
   const renderPill = (name: string) => {
     return (
-      <>
+      <View key={name} style={styles.typeRowItem}>
         <TouchableOpacity
           onPress={() => {
             setSectedType(name);
@@ -54,7 +57,7 @@ const PokeListScreen: React.FC<Props> = ({navigation}) => {
           <Pill key={name} isActive={selectedType === name} value={name} />
         </TouchableOpacity>
         <Spacer width={8} />
-      </>
+      </View>
     );
   };
 

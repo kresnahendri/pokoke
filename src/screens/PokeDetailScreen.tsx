@@ -4,6 +4,7 @@ import {
   ActivityIndicator,
   Image,
   Platform,
+  RefreshControl,
   ScrollView,
   StyleSheet,
   View,
@@ -61,7 +62,9 @@ interface Props {
 }
 
 const PokeDetailScreen: React.FC<Props> = ({route, navigation}) => {
-  const {data, isLoading} = useGetPokeDetail({name: route.params.name});
+  const {data, isLoading, refetch, isFetching} = useGetPokeDetail({
+    name: route.params.name,
+  });
 
   if (!data || isLoading) {
     return <ActivityIndicator />;
@@ -201,7 +204,11 @@ const PokeDetailScreen: React.FC<Props> = ({route, navigation}) => {
   };
 
   return (
-    <ScrollView style={styles.root}>
+    <ScrollView
+      style={styles.root}
+      refreshControl={
+        <RefreshControl refreshing={isFetching} onRefresh={() => refetch()} />
+      }>
       <Container>
         {renderImages()}
         <Spacer height={24} />

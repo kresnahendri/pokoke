@@ -3,6 +3,7 @@ import {
   ActivityIndicator,
   ListRenderItemInfo,
   Platform,
+  RefreshControl,
   StyleSheet,
   View,
 } from "react-native";
@@ -40,7 +41,7 @@ const PokeListContainer: React.FC<Props> = ({type_, navigation}) => {
     fetchMore,
   } = useGetPokeList({
     type_,
-    limit: 18,
+    limit: 28,
     offset: 0,
   });
   const [isWide, setIsWide] = useState(true);
@@ -60,15 +61,6 @@ const PokeListContainer: React.FC<Props> = ({type_, navigation}) => {
       isTresholdReached && !isFetching && !isFetchingMore;
     isAllowToFetchMore ? fetchMore() : resetScrollDetector();
   }, [isTresholdReached, isFetching, isFetchingMore]);
-
-  useEffect(() => {
-    if (flattenData) {
-      const isLess = flattenData?.length > 0 && flattenData?.length < 12;
-      if (isLess) {
-        fetchMore();
-      }
-    }
-  }, [data]);
 
   const renderItem = ({
     item: pokemon,
@@ -93,8 +85,11 @@ const PokeListContainer: React.FC<Props> = ({type_, navigation}) => {
   const flatListProps = !isWeb && {
     onEndReachedThreshold: 0.5,
     onEndReached: () => fetchMore(),
-    refreshing: isLoading,
+    refreshing: isFetching,
     onRefresh: () => refetch && refetch(),
+    refreshControl: (
+      <RefreshControl refreshing={isFetching} onRefresh={() => refetch()} />
+    ),
     ListFooterComponent: () =>
       shouldRenderLoader ? (
         <ActivityIndicator style={{paddingVertical: 16}} />
