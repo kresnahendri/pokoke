@@ -16,7 +16,7 @@ export const useGetPokeList = ({
   limit = 12,
   type_ = "all",
 }: Args) => {
-  const defaultUrl = `${config.POKE_API_URL}/pokemon?offset=${offset}&limit=${limit}`;
+  const isNonType = type_ === "all";
 
   const result = useInfiniteQuery<GetPokeDetailResponse[]>(
     `Poke_useGetPokeList_${type_}`,
@@ -24,18 +24,26 @@ export const useGetPokeList = ({
       if (nextUrl === null) {
         return Promise.resolve([]);
       }
+
+      const url = isNonType
+        ? nextUrl ||
+          `${config.POKE_API_URL}/pokemon?offset=${offset}&limit=${limit}`
+        : `${config.POKE_API_URL}/type/${type_}`;
+
       const serializedResult = fetcher<GetPokeListResponse>({
-        url: nextUrl || defaultUrl,
+        url,
       }).then(async (pokeList) => {
-        const fetchDetails = pokeList.results.map(({name}) =>
-          fetchPokeDetail(name),
-        );
+        const results = isNonType
+          ? pokeList.results
+          : pokeList.pokemon.map((it) => it.pokemon);
+
+        const fetchDetails = results.map(({name}) => fetchPokeDetail(name));
 
         return Promise.all(fetchDetails).then((poke) => {
           const serialized = poke
             .filter(({types}) => {
               const found = types.find((t) => t.type.name === type_);
-              return found || type_ === "all";
+              return found || isNonType;
             })
             .map((it) => {
               return {
@@ -44,7 +52,9 @@ export const useGetPokeList = ({
               };
             });
 
-          return serialized;
+          return isNonType
+            ? serialized
+            : serialized.slice(nextUrl ? nextUrl - limit : 0, nextUrl || 12);
         });
       });
 
@@ -52,7 +62,11 @@ export const useGetPokeList = ({
     },
     {
       refetchOnWindowFocus: false,
-      getFetchMore: (last, _) => last[last.length - 1]?.nextUrl || null,
+      getFetchMore: (last, all) => {
+        return isNonType
+          ? last[last.length - 1]?.nextUrl || null
+          : all.flatMap((x) => x).length + last.length;
+      },
     },
   );
 

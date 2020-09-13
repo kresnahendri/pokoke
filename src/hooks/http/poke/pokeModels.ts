@@ -55,6 +55,10 @@ export interface GetPokeListResponse {
   previous: string | null;
   results: Pokemon[];
   serializedResults: GetPokeDetailResponse[];
+  pokemon: {
+    pokemon: Pokemon;
+    slot: number;
+  }[];
 }
 
 export interface GetPokeTypeListResponse {

@@ -41,7 +41,7 @@ const PokeListContainer: React.FC<Props> = ({type_, navigation}) => {
     fetchMore,
   } = useGetPokeList({
     type_,
-    limit: 28,
+    limit: 12,
     offset: 0,
   });
   const [isWide, setIsWide] = useState(true);
